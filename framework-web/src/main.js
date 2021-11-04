@@ -3,7 +3,6 @@ import App from './App.vue'
 import { initRouter } from './router'
 import './theme/index.less'
 import Antd from 'ant-design-vue'
-import Viser from 'viser-vue'
 import '@/mock'
 import store from './store'
 import 'animate.css/source/animate.css'
@@ -17,7 +16,6 @@ const i18n = initI18n('CN', 'US')
 
 Vue.use(Antd)
 Vue.config.productionTip = false
-Vue.use(Viser)
 Vue.use(Plugins)
 
 bootstrap({ router, store, i18n, message: Vue.prototype.$message })

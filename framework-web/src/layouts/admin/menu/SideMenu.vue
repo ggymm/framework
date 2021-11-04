@@ -67,9 +67,9 @@ export default {
   overflow-y: auto;
   z-index: 10;
   .logo{
-    height: 48px;
+    height: 54px;
+    line-height: 54px;
     position: relative;
-    line-height: 48px;
     padding-left: 24px;
     -webkit-transition: all .3s;
     transition: all .3s;

@@ -1,10 +1,14 @@
 <template>
-  <div>用户管理</div>
+  <div>
+    组织树
+
+    <div>用户列表</div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'UserManage'
+  name: 'UserList'
 }
 </script>
 

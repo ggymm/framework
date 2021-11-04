@@ -1,10 +1,12 @@
 <template>
-  <div>角色管理</div>
+  <div>
+    带查询的Tree
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Role'
+  name: 'SearchTree'
 }
 </script>
 

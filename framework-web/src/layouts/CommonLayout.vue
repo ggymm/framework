@@ -1,17 +1,14 @@
 <template>
   <div class="common-layout">
     <div class="content"><slot /></div>
-    <page-footer :link-list="footerLinks" :copyright="copyright" />
   </div>
 </template>
 
 <script>
-import PageFooter from '@/layouts/page/PageFooter'
 import { mapState } from 'vuex'
 
 export default {
   name: 'CommonLayout',
-  components: { PageFooter },
   computed: {
     ...mapState('setting', ['footerLinks', 'copyright'])
   }

@@ -3,7 +3,6 @@
     <page-header
       v-if="!fixedTabs || !multiPage"
       ref="pageHeader"
-      :style="`margin-top: ${multiPage ? 0 : -24}px`"
       :breadcrumb="breadcrumb"
       :title="pageTitle"
       :logo="logo"
@@ -21,7 +20,7 @@
       </div>
       <slot v-if="this.$slots.extra" slot="extra" name="extra" />
     </page-header>
-    <div ref="page" :class="['page-content', layout, pageWidth]">
+    <div ref="page" :class="['page-content', layout, pageWidth]" :style="pageContent()">
       <slot />
     </div>
   </div>
@@ -75,27 +74,20 @@ export default {
     }
   },
   updated() {
-    if (!this._inactive) {
-      this.updatePageHeight()
-    }
   },
   activated() {
-    this.updatePageHeight()
   },
   deactivated() {
-    this.updatePageHeight(0)
   },
   mounted() {
-    this.updatePageHeight()
   },
   created() {
     this.page = this.$route.meta.page
   },
   beforeDestroy() {
-    this.updatePageHeight(0)
   },
   methods: {
-    ...mapMutations('setting', ['correctPageMinHeight']),
+    ...mapMutations('setting', ['correctPageMinHeight', 'multiPage']),
     getRouteBreadcrumb() {
       const routes = this.$route.matched
       const path = this.$route.path
@@ -111,18 +103,9 @@ export default {
       }
       return breadcrumb
     },
-    /**
-     * 用于计算页面内容最小高度
-     * @param newHeight
-     */
-    updatePageHeight(newHeight) {
-      if (!this.fixedTabs || !this.multiPage) {
-        if (!this.$refs.pageHeader) {
-          return
-        }
-        newHeight = this.$refs.pageHeader.$el.offsetHeight + this.marginCorrect
-        this.correctPageMinHeight(this.pageHeaderHeight - newHeight)
-        this.pageHeaderHeight = newHeight
+    pageContent() {
+      return {
+        'height': `calc(100vh - ${this.multiPage ? '205px' : '157px'})`
       }
     }
   }
@@ -130,9 +113,6 @@ export default {
 </script>
 
 <style lang="less">
-  .page-header{
-    margin: 0 -20px 0;
-  }
   .link{
     /*margin-top: 16px;*/
     line-height: 20px;
@@ -147,7 +127,8 @@ export default {
   }
   .page-content{
     position: relative;
-    padding: 20px 0 0;
+    padding: 20px;
+    overflow-y: auto;
     &.side{
     }
     &.head.fixed{

@@ -1,5 +1,5 @@
 <template>
-  <tabs-layout>
+  <admin-layout>
     <contextmenu :item-list="menuItemList" :visible.sync="menuVisible" @select="onMenuSelect" />
     <tabs-head
       v-if="multiPage"
@@ -10,27 +10,27 @@
       @refresh="refresh"
       @contextmenu="onContextmenu"
     />
-    <div :class="['tabs-view-content', layout, pageWidth]" :style="`margin-top: ${multiPage ? -24 : 0}px`">
+    <div :class="['tabs-view-content', layout, pageWidth]">
       <a-keep-alive v-if="multiPage && cachePage" v-model="clearCaches" :exclude-keys="excludeKeys">
         <router-view v-if="!refreshing" ref="tabContent" :key="$route.path" />
       </a-keep-alive>
       <router-view v-else-if="!refreshing" ref="tabContent" />
     </div>
-  </tabs-layout>
+  </admin-layout>
 </template>
 
 <script>
-import TabsLayout from '@/layouts/tabs/TabsLayout'
-import Contextmenu from '@/layouts/tabs/menu/Contextmenu'
+import AdminLayout from '@/layouts/admin/AdminLayout'
+import Contextmenu from '@/layouts/admin/menu/Contextmenu'
 import { mapState, mapMutations } from 'vuex'
 import { getI18nKey } from '@/utils/routerUtil'
 import AKeepAlive from '@/components/cache/AKeepAlive'
-import TabsHead from '@/layouts/tabs/TabsHead'
+import TabsHead from '@/layouts/admin/tabs/TabsHead'
 
 export default {
-  name: 'TabsView',
-  i18n: require('./tabs/i18n'),
-  components: { TabsHead, Contextmenu, TabsLayout, AKeepAlive },
+  name: 'AdminView',
+  i18n: require('./i18n'),
+  components: { TabsHead, Contextmenu, AdminLayout, AKeepAlive },
   data() {
     return {
       clearCaches: [],
@@ -50,9 +50,6 @@ export default {
         { key: '3', icon: 'close', text: this.$t('closeOthers') },
         { key: '4', icon: 'sync', text: this.$t('refresh') }
       ]
-    },
-    tabsOffset() {
-      return this.multiPage ? 20 : 0
     }
   },
   watch: {
@@ -83,9 +80,6 @@ export default {
       } else {
         this.addListener()
       }
-    },
-    tabsOffset(newVal, oldVal) {
-      this.correctPageMinHeight(oldVal - newVal)
     }
   },
   created() {
@@ -104,11 +98,9 @@ export default {
     }
   },
   mounted() {
-    this.correctPageMinHeight(-this.tabsOffset)
   },
   beforeDestroy() {
     this.removeListener()
-    this.correctPageMinHeight(this.tabsOffset)
   },
   methods: {
     changePage(key) {

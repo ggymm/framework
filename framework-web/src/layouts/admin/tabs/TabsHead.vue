@@ -6,14 +6,6 @@
       :active-key="active"
       :hide-add="true"
     >
-      <a-tooltip slot="tabBarExtraContent" placement="left" :title="lockTitle">
-        <a-icon
-          theme="filled"
-          class="header-lock"
-          :type="fixedTabs ? 'lock' : 'unlock'"
-          @click="onLockClick"
-        />
-      </a-tooltip>
       <a-tab-pane v-for="page in pageList" :key="page.path">
         <div slot="tab" class="tab" @contextmenu="e => onContextmenu(page.path, e)">
           <a-icon :class="['icon-sync', {'hide': page.path !== active && !page.loading}]" :type="page.loading ? 'loading' : 'sync'" @click="onRefresh(page)" />
@@ -25,7 +17,7 @@
     <div v-if="affixed" class="virtual-tabs-head" />
     <div
       v-if="multiPage && affixed"
-      :class="['tabs-page-header', layout, pageWidth, {'affixed': affixed}]"
+      :class="['tabs-page-header', layout, pageWidth, {'affixed': affixed, 'collapsed' : tabsLayout.collapsed}]"
     >
       <div class="tabs-page-header-wide">
         <div class="breadcrumb">
@@ -209,7 +201,7 @@ export default {
         }
       }
       &.fixed-header{
-        top: 48px;
+        top: 54px;
       }
     }
   }
@@ -221,7 +213,7 @@ export default {
     padding: 16px 20px;
     &.affixed {
       margin: 0 auto;
-      top: 96px;
+      top: 102px;
       position: fixed;
       z-index: 1;
       &.side,&.mix{

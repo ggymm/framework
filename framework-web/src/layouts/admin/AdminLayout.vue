@@ -1,5 +1,5 @@
 <template>
-  <a-layout :class="['admin-layout', 'beauty-scroll']">
+  <a-layout :class="['admin-layout']">
     <drawer v-if="isMobile" v-model="drawerOpen">
       <side-menu
         :theme="theme.mode"
@@ -18,43 +18,29 @@
       :collapsible="true"
     />
     <div v-if="fixedSideBar && !isMobile" :style="`width: ${sideMenuWidth}; min-width: ${sideMenuWidth};max-width: ${sideMenuWidth};`" class="virtual-side" />
-    <drawer v-if="!hideSetting" v-model="showSetting" placement="right">
-      <div slot="handler" class="setting">
-        <a-icon :type="showSetting ? 'close' : 'setting'" />
-      </div>
-      <setting />
-    </drawer>
     <a-layout class="admin-layout-main beauty-scroll">
       <admin-header :class="[{'fixed-tabs': fixedTabs, 'fixed-header': fixedHeader, 'multi-page': multiPage}]" :style="headerStyle" :menu-data="headMenuData" :collapsed="collapsed" @toggleCollapse="toggleCollapse" />
       <a-layout-header v-show="fixedHeader" :class="['virtual-header', {'fixed-tabs' : fixedTabs, 'fixed-header': fixedHeader, 'multi-page': multiPage}]" />
-      <a-layout-content class="admin-layout-content" :style="`min-height: ${minHeight}px;`">
+      <a-layout-content class="admin-layout-content">
         <div style="position: relative">
           <slot />
         </div>
       </a-layout-content>
-      <a-layout-footer style="padding: 0">
-        <page-footer :link-list="footerLinks" :copyright="copyright" />
-      </a-layout-footer>
     </a-layout>
   </a-layout>
 </template>
 
 <script>
-import AdminHeader from '../admin/AdminHeader'
-import PageFooter from '../page/PageFooter'
+import AdminHeader from './header/AdminHeader'
 import Drawer from '../../components/tool/Drawer'
 import SideMenu from './menu/SideMenu'
-import Setting from '../../components/setting/Setting'
 import { mapState, mapMutations, mapGetters } from 'vuex'
 
-// const minHeight = window.innerHeight - 64 - 122
-
 export default {
-  name: 'TabsLayout',
-  components: { Setting, SideMenu, Drawer, PageFooter, AdminHeader },
+  name: 'AdminLayout',
+  components: { SideMenu, Drawer, AdminHeader },
   data() {
     return {
-      minHeight: window.innerHeight - 64 - 122 + 66,
       collapsed: false,
       showSetting: false,
       drawerOpen: false
@@ -99,11 +85,9 @@ export default {
     }
   },
   created() {
-    this.correctPageMinHeight(this.minHeight - 20)
     this.setActivated(this.$route)
   },
   beforeDestroy() {
-    this.correctPageMinHeight(-this.minHeight + 20)
   },
   methods: {
     ...mapMutations('setting', ['correctPageMinHeight', 'setActivatedFirst']),
@@ -162,7 +146,7 @@ export default {
       }
     }
     .admin-layout-content{
-      padding: 24px 20px 0;
+      /*padding: 24px 20px 0;*/
       /*overflow-x: hidden;*/
       /*min-height: calc(100vh - 64px - 122px);*/
     }

@@ -1,6 +1,6 @@
 // 视图组件
 const view = {
-  tabs: () => import('@/layouts/tabs'),
+  admin: () => import('@/layouts/AdminView'),
   blank: () => import('@/layouts/BlankView'),
   page: () => import('@/layouts/PageView')
 }
@@ -11,11 +11,6 @@ const routerMap = {
     authority: '*',
     path: '/login',
     component: () => import('@/pages/login')
-  },
-  demo: {
-    name: '演示页',
-    renderMenu: false,
-    component: () => import('@/pages/demo')
   },
   exp403: {
     authority: '*',
@@ -37,7 +32,7 @@ const routerMap = {
     path: '/',
     name: '首页',
     redirect: '/login',
-    component: view.tabs
+    component: view.admin
   },
   parent1: {
     name: '父级路由1',

@@ -1,4 +1,4 @@
-import TabsView from '@/layouts/TabsView'
+import AdminView from '@/layouts/AdminView'
 import PageView from '@/layouts/PageView'
 
 // 路由配置
@@ -27,7 +27,7 @@ const options = {
     {
       path: '/',
       name: '首页',
-      component: TabsView,
+      component: AdminView,
       redirect: '/login',
       children: [
         {
@@ -41,32 +41,32 @@ const options = {
             {
               path: 'workplace',
               name: '工作台',
-              component: () => import('@/pages/dashboard/workplace')
+              component: () => import('@/pages/dashboard/WorkPlace')
             }
           ]
         },
         {
           path: 'system',
-          name: '系统设置',
+          name: '系统管理',
           meta: {
             icon: 'setting'
           },
           component: PageView,
           children: [
             {
-              path: 'orgManage',
+              path: 'dept',
               name: '组织管理',
-              component: () => import('@/pages/system/org')
+              component: () => import('@/pages/system/DeptTree')
             },
             {
-              path: 'userManage',
+              path: 'user',
               name: '用户管理',
-              component: () => import('@/pages/system/user')
+              component: () => import('@/pages/system/UserList')
             },
             {
               path: 'roleManage',
               name: '角色管理',
-              component: () => import('@/pages/system/role')
+              component: () => import('@/pages/system/RoleList')
             }
           ]
         }
