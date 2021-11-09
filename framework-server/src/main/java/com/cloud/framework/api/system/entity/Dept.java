@@ -1,9 +1,6 @@
 package com.cloud.framework.api.system.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -18,8 +15,7 @@ public class Dept {
     /**
      * 组织ID
      */
-    @TableId(value = "dept_id")
-    @TableField(value = "dept_id")
+    @TableId(value = "dept_id", type = IdType.AUTO)
     private Long deptId;
     /**
      * 父组织ID

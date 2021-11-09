@@ -26,6 +26,6 @@ public class DeptServiceTest {
     @Test
     public void testGetTree() {
         List<TreeNode> tree = deptService.getTree();
-        System.out.println(JSONUtil.toJsonStr(tree));
+        System.out.println(JSONUtil.toJsonPrettyStr(tree));
     }
 }
